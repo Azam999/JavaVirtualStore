@@ -2,16 +2,24 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Item {
+  private int id;
+
   private String name;
   private int quantity;
   private double price;
-  private String category;
+  private Category category;
 
-  Item(String name, String category, int quantity, double price) {
+  Item(int id, String name, Category category, int quantity, double price) {
+    this.id = id;
     this.name = name;
     this.quantity = quantity;
     this.price = price;
     this.category = category;
+  }
+
+  // ========================= GETTERS AND SETTERS =========================
+  public int getId() {
+    return this.id;
   }
 
   public String getName() {
@@ -42,11 +50,11 @@ public class Item {
     this.price = price;
   }
 
-  public String getCategory() {
+  public Category getCategory() {
     return this.category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(Category category) {
     this.category = category;
   }
 
