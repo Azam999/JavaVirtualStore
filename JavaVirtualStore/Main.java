@@ -22,34 +22,35 @@ public class Main {
 
   public static String createItem(Item item) {
     items.add(item);
-    return item.getItem();
+    return item.getFormattedItem();
   }
 
   public static String getItemById(UUID id) {
-    String itemFound = items.stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0).getItem();
+    String itemFound = items.stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0).getFormattedItem();
     return itemFound;
   }
 
   public static ArrayList<String> getAllItems() {
     ArrayList<String> updatedItems = new ArrayList<String>();
-    items.forEach(item -> updatedItems.add(item.getItem()));
+    items.forEach(item -> updatedItems.add(item.getFormattedItem()));
     return updatedItems;
   }
 
   public static void deleteItem(UUID id) {
     // The id is the index
-    items.removeIf(item -> item.getId() == id);
+    items.removeIf(item -> item.getId().equals(id));
   }
 
   public static void main(String[] args) {
     System.out.println("Welcome to the store!\n");
     System.out.println("""
-        Instructions:
-        Get all items: ga
-        Get item: g
-        Create item: c
-        Delete item: d
-        Buy item: b
+        Commands:
+        - Get all items: ga
+        - Get item: g
+        - Create item: c
+        - Delete item: d
+        - Buy item: b
+        - Terminate: close
         """);
 
     // Initialize the store with the default items
@@ -61,24 +62,40 @@ public class Main {
 
     while (!scanner.nextLine().equals("close")) {
       switch (scanner.next()) {
-        case "ga":
+        case "ga": {
           System.out.println("All items: " + getAllItems());
           break;
-        case "g":
+        }
+        case "g": {
           System.out.print("Enter id: ");
           String stringId = scanner.next();
           UUID id = UUID.fromString(stringId);
-          System.out.println(getItemById(id));
+          System.out.println("Item: " + getItemById(id));
           break;
+        }
+        case "d": {
+          System.out.print("Enter id: ");
+          String stringId = scanner.next();
+          UUID id = UUID.fromString(stringId);
+          deleteItem(id);
+          System.out.println(String.format("Deleted an item with the id of %s", id));
+        }
+        case "c": {
+          System.out.print("Enter name: ");
+          String name = scanner.next(); // Can't go more than one word
+          System.out.print("Enter category: ");
+          Category category = Category.valueOf(scanner.next().toUpperCase());
+          System.out.print("Enter quantity: ");
+          int quantity = scanner.nextInt();
+          System.out.print("Enter price: ");
+          double price = scanner.nextDouble();
+          createItem(new Item(name, category, quantity, price));
+          System.out.println("Created item: " + items.get(items.size() - 1).getFormattedItem());
+        }
       }
-
     }
 
     scanner.close();
     // put all commands in file
-
-    // for (String item : getAllItems()) {
-    //   System.out.println(item);
-    // }
   }
 }

@@ -58,7 +58,7 @@ public class Item {
     this.category = category;
   }
 
-  public String getItem() {
+  public String getFormattedItem() {
     String item = String.format("%s | %s | %s | %d | %s", this.id, this.name, this.category, this.quantity, this.getPrice());
     return item;
   }
