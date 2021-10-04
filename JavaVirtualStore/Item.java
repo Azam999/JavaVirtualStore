@@ -58,8 +58,22 @@ public class Item {
     this.category = category;
   }
 
-  public String getFormattedItem() {
-    String item = String.format("%s | %s | %s | %d | %s", this.id, this.name, this.category, this.quantity, this.getPrice());
+  // Returns the item with the format
+  public String getFormattedItem(boolean compact) {
+    String item;
+    if (compact) {
+      item = String.format("%s | %s | %s | %d | %s", this.id, this.name, this.category, this.quantity, this.getPrice());
+    } else {
+      item = String.format("""
+        {
+            id: %s,
+            name: %s,
+            category: %s,
+            quantity: %d,
+            price: %s
+        }
+        """, this.id, this.name, this.category, this.quantity, this.getPrice());
+    }
     return item;
   }
 }

@@ -20,19 +20,19 @@ public class Main {
     items.add(new Item("Chair", Category.HOME_AND_FURNITURE, 40284, 105.99));
   }
 
-  public static String createItem(Item item) {
+  public static String createItem(Item item, boolean compact) {
     items.add(item);
-    return item.getFormattedItem();
+    return item.getFormattedItem(false);
   }
 
   public static String getItemById(UUID id) {
-    String itemFound = items.stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0).getFormattedItem();
+    String itemFound = items.stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0).getFormattedItem(false);
     return itemFound;
   }
 
   public static ArrayList<String> getAllItems() {
     ArrayList<String> updatedItems = new ArrayList<String>();
-    items.forEach(item -> updatedItems.add(item.getFormattedItem()));
+    items.forEach(item -> updatedItems.add(item.getFormattedItem(false)));
     return updatedItems;
   }
 
@@ -89,8 +89,8 @@ public class Main {
           int quantity = scanner.nextInt();
           System.out.print("Enter price: ");
           double price = scanner.nextDouble();
-          createItem(new Item(name, category, quantity, price));
-          System.out.println("Created item: " + items.get(items.size() - 1).getFormattedItem());
+          createItem(new Item(name, category, quantity, price), false);
+          System.out.println("Created item: " + items.get(items.size() - 1).getFormattedItem(false));
         }
       }
     }
