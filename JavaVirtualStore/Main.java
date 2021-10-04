@@ -4,9 +4,9 @@ import java.util.UUID;
 
 public class Main {
   /*
-   * Create items 
-   * Get items 
-   * Delete items 
+   * Create items
+   * Get items
+   * Delete items
    * Buy items
    */
 
@@ -26,7 +26,7 @@ public class Main {
   }
 
   public static String getItemById(UUID id) {
-    String itemFound = items.stream().filter(item -> item.getId() == id).collect(Collectors.toList()).get(0).getItem();
+    String itemFound = items.stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0).getItem();
     return itemFound;
   }
 
@@ -45,8 +45,9 @@ public class Main {
     System.out.println("Welcome to the store!\n");
     System.out.println("""
         Instructions:
-        Create item: c
+        Get all items: ga
         Get item: g
+        Create item: c
         Delete item: d
         Buy item: b
         """);
@@ -54,8 +55,30 @@ public class Main {
     // Initialize the store with the default items
     setDefaultItems();
 
-    for (String item : getAllItems()) {
-      System.out.println(item);
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("Enter anything to start");
+
+    while (!scanner.nextLine().equals("close")) {
+      switch (scanner.next()) {
+        case "ga":
+          System.out.println("All items: " + getAllItems());
+          break;
+        case "g":
+          System.out.print("Enter id: ");
+          String stringId = scanner.next();
+          UUID id = UUID.fromString(stringId);
+          System.out.println(getItemById(id));
+          break;
+      }
+
     }
+
+    scanner.close();
+    // put all commands in file
+
+    // for (String item : getAllItems()) {
+    //   System.out.println(item);
+    // }
   }
 }
