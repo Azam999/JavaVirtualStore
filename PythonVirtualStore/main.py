@@ -13,11 +13,32 @@ def set_default_items():
   items.append(Item("Chair", Category.HOME_AND_FURNITURE, 40284, 105.99))
 
 # Convert the items to json format
-def items_in_json():
+def get_all_items():
   json_items = []
   for item in items:
     json_items.append(json.dumps(item.__dict__))
   return json_items
 
+def get_item_by_id(id):
+  for item in items:
+    if item.id == id:
+      return json.dumps(item.__dict__)
+
+def create_item(name, category, quantity, price):
+  items.append(Item(name, category, quantity, price))
+  
+def delete_item(id):
+  for item in items:
+    if item.id == id:
+      items.remove(item)
+
 set_default_items()
-print(items_in_json())
+# create_item("Shoe Dog", Category.BOOKS, 432234, 14.99)
+# print(get_all_items())
+
+# id = input("Enter id: ")
+# delete_item(id)
+
+# print(get_all_items())
+
+# # print(get_item_by_id(id))
